@@ -55,6 +55,7 @@ const LensType = () => {
 
 
     return (
+        <div>
         <Fade >
             <div className=' rounded-[20px]'>
                 <h3 className='font-semibold px-2 py-6 text-2xl sm:text-3xl'>{lang?.[state.lang.value]?.lensType?.title}:</h3>
@@ -101,6 +102,7 @@ const LensType = () => {
             }
 
         </Fade>
+        </div> 
     )
 
 }
