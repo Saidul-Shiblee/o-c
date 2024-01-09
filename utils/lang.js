@@ -2,7 +2,7 @@ export const lang={
   ar:{
         selectLanguage:'الرجاء اختيار لغتك',
         powerDetails:{
-            title:'من فضلك أدخل قوتك',
+            title:'من فضلك أدخل مقاس النظارة ',
             Spher: 'Spher',
             Cylinder: 'Cylinder',
             Axis: 'Axis',
@@ -50,9 +50,9 @@ export const lang={
         },
             options: {
             text:'الخيار الذي حددته',
-            Standard: "معيار",
-            Premium: "غالي",
-            Economy: "اقتصاد"
+                Standard: "متوسط",
+                Premium: "بريميوم",
+                Economy: "اقتصادي"
         },
   },
   en:{
