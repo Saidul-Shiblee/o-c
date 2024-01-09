@@ -8,6 +8,8 @@ import LensType from "./LensType";
 import Language from "./Language";
 import PowerType from "./PowerType";
 import FrameType from "./FrameType";
+import BlueLight from "./BlueLight";
+import SelectedOption from "./SelectedOption";
 
 const MultiStepForm = () => {
   const { state } = useFormContext();
@@ -17,7 +19,9 @@ const MultiStepForm = () => {
       {state.step === 2 && <LensPower />}
       {state.step === 3 && <PowerType />}
       {state.step === 4 && <LensType />}
-      {state.step === 5 && <FrameType />}
+      {state.step === 5 && <BlueLight />}
+      {state.step === 6 && <FrameType />}
+      
     </div>
   );
 };

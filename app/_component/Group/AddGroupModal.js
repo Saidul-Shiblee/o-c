@@ -101,7 +101,7 @@ export default function AddGroupModal({ show, setShow, groups, setGroups, group 
                     cache: 'no-store'
                 })
                 const result = await res.json()
-                console.log(res)
+              
                 if (res.ok) {
                     setGroups(pv => [...pv, result.data])
                     resetForm()

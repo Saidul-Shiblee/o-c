@@ -16,6 +16,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        arabic: ['var(--arabic-font)'],
+        english: ['var(--english-font)'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

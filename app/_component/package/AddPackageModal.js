@@ -34,14 +34,14 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
         try {
             setLoading(true)
             if (!pack) {
-               console.log(data)
+          
                 const res = await fetch('/api/package', {
                     method: "POST",
                     body: JSON.stringify(data),
                     cache: 'no-store'
                 })
                 const result = await res.json()
-                console.log(result)
+         
                 if (res.ok) {
                     setPackages(pv => [...pv, result.data])
                     resetForm()

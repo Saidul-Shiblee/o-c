@@ -10,22 +10,22 @@ const FrameType = () => {
     return (
         <>
             <Fade >
-                <div className=' rounded-[20px] '>
-                    <h3 className='font-semibold px-2 py-6 text-2xl sm:text-3xl'>{lang?.[state.lang.value]?.frameType?.['title']}</h3>
+                <div className=' rounded-[20px] w-[350px] sm:w-[490px]'>
+                    <h3 className={` font-semibold px-2 py-6 text-2xl ${state.lang.value === "ar" ? "font-arabic" : "font-english"} `}>{lang?.[state.lang.value]?.frameType?.['title']}</h3>
 
 
                     <div className="radio-list">
                         <div className="radio-item uppercase border rounded" onClick={() => handleChange('frameType', false)}>
                             <input name="radio" id="radio1" type="radio" checked={state?.frameType?.value === false} />
                             <label htmlFor="radio1" className='flex gap-4'>
-                                <span>{lang?.[state.lang.value]?.frameType?.['No']}</span>
+                                <span className={state.lang.value === "ar" ? "font-arabic" : "font-english"}>{lang?.[state.lang.value]?.frameType?.['No']}</span>
                             </label>
                         </div>
                         <div className="radio-item uppercase border rounded" onClick={() => handleChange('frameType', true)}>
                             <input name="radio" id="radio2" type="radio" checked={state?.frameType?.value === true} />
                             <label htmlFor="radio2" className='flex gap-4'>
                                 <div>
-                                    <span>{lang?.[state.lang.value]?.frameType?.['Yes']}</span>
+                                    <span className={state.lang.value === "ar" ? "font-arabic" : "font-english"}>{lang?.[state.lang.value]?.frameType?.['Yes']}</span>
                                 </div>
                             </label>
                         </div>

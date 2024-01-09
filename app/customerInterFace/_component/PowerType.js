@@ -12,7 +12,7 @@ const PowerType = () => {
 
     return (
         <div >
-            <h3 className='font-semibold px-2 py-6 text-2xl sm:text-3xl'>{lang?.[state.lang.value]?.lensType?.title}:</h3>
+            <h3 className={`font-semibold px-2 py-6 text-2xl ${state.lang.value==="ar"?"font-arabic":"font-english"}`} >{lang?.[state.lang.value]?.lensType?.title}:</h3>
 
             <div dir='ltr'>
                 <div className="flex items-center space-x-2">

@@ -5,29 +5,14 @@ import OpticalCare from "./../../../public/opticalShop.png";
 
 const Sidebar = () => {
     const { state } = useFormContext()
-    const [selectedValue, setSelectedValue] = useState("");
     const [selectedFrameValue, setSleectedFrameValue] = useState("");
     useEffect(() => {
-        if (state?.lensType?.value === "6585c5eed71dd57bf1c363af") {
-            setSelectedValue("Clear")
-        }
-        if (state?.lensType?.value === "658579fca68abf092b93a21a") {
-            setSelectedValue("Automatic")
-        }
-        if (state?.lensType?.value === "6585ba170eb26cfd7bc7942b") {
-            setSelectedValue("Tented")
-        }
-        if (state?.lensType?.value === "658c647383a3b9afb9905df5") {
-            setSelectedValue("Blue cut")
-        }
-
         if (state?.frameType.value === false) {
             setSleectedFrameValue("Full Frame");
         }
         if (state?.frameType.value === true) {
             setSleectedFrameValue("Rimless Frame");
         }
-
     }, [state])
     return (
       <div className="bg-white border h-full bottom-0 w-full shadow-2xl px-8 flex flex-col gap-8">
@@ -49,13 +34,16 @@ const Sidebar = () => {
           <h1 className="text-3xl font-bold text-[#253D85] ">Your Selection</h1>
           <h3 className="font-semibold mt-4 flex gap-2">
             Lens type:{" "}
-            <span className={`${state.step > 2 ? "block" : "hidden"}`}>
-              {(state?.radd?.value||state?.radd?.value)? `${state?.powerType?.value} -`:""}{selectedValue}{" "}
+            <span className={`${state.step >= 3 ? "block" : "hidden"}`}>
+              {(state?.radd?.value || state?.radd?.value) ? `${state?.powerType?.value} -`:""}
+            </span>
+            <span className={`${state.step >= 4 ? "block" : "hidden"}`}>
+              {(state?.lensType?.name === 'Clear' && state?.blueLight) ? "Blue Cut" : state?.lensType?.name }
             </span>
           </h3>
           <h3 className="font-semibold mt-4 flex gap-2">
             Frame Type:{" "}
-            <span className={`${state.step === 5 ? "block" : "hidden"}`}>
+            <span className={`${state.step >= 6 ? "block" : "hidden"}`}>
               {selectedFrameValue}
             </span>
           </h3>

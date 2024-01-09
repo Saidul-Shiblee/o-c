@@ -25,7 +25,7 @@ export default function LensPower() {
         <>
             <Fade >
                 <div className='rounded-[20px]' >
-                    <h3 className=' font-semibold px-2 py-6 text-2xl sm:text-3xl'>{lang?.[state.lang.value]?.powerDetails?.['title']}</h3>
+                    <h3 className={` font-semibold px-2 py-6 text-2xl ${state.lang.value === "ar" ? "font-arabic" : "font-english"} `} >{lang?.[state.lang.value]?.powerDetails?.['title']}</h3>
                     <div className='flex' dir='ltr'>
                         <div className='w-[60px] sm:w-[98px] border-[1px] flex justify-center items-center px-4 py-2  font-semibold'>Eye</div>
                         <div className='w-[80px] sm:w-[98px] border-[1px] flex justify-center items-center px-4 py-2 font-semibold'>Sphere</div>

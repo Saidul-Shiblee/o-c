@@ -54,7 +54,7 @@ export async function PUT(request) {
         let state = await request.json()
         const filter = { _id: new ObjectId(searchParams.get("id")) };
         const editedGroup = await findAndUpdate(filter, { $set: state })
-        console.log(editedGroup)
+
         return NextResponse.json(
             {
                 data: editedGroup,

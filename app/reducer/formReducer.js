@@ -26,6 +26,9 @@ export const FormReducer = (state, { key, payload }) => {
     case "lensType":
       state.lensType.value = payload.newValue;
       return;
+    case "lensName":
+      state.lensType.name = payload.newValue;
+      return;
     case "frameType":
       state.frameType.value = payload.newValue;
       return;
@@ -35,8 +38,14 @@ export const FormReducer = (state, { key, payload }) => {
     case "step":
       state.step = payload.newValue;
       return;
+    case "blueLight":
+      state.blueLight = payload.newValue;
+      return;
     case "result":
       state.result = payload.newValue;
+      return;
+    case "selectedOption":
+      state.selectedOption = payload.newValue;
       return;
     case "loading":
       state.loading = payload.newValue

@@ -37,13 +37,15 @@ export const DEFAULT_STATE = {
     value: false,
     step: 5,
   },
+  blueLight:false,
   lensType: {
     value: "",
+    name:"Automatic",
     step: 4,
   },
   step: 1,
   loading: false,
   result: false,
-
+  selectedOption:null,
   buttonClicked: "next",
 };
