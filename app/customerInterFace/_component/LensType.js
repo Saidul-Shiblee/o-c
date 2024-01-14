@@ -17,14 +17,16 @@ const LensType = () => {
     const { state, handleChange, lensType, } = useFormContext();
 
     useEffect(() => {
-        if (state.ladd.value > 0 || state.radd.value > 0) {
-            const filterLensType = lensType.filter(el => el?.lensName !== 'Tented' && el?.lensName !== 'Blue Cut')
-            handleChange('lensType', filterLensType?.[0]?._id);
-            return;
+
+        if (!state?.lensType?.value){
+            if (state.ladd.value > 0 || state.radd.value > 0) {
+                const filterLensType = lensType.filter(el => el?.lensName !== 'Tented' && el?.lensName !== 'Blue Cut')
+                handleChange('lensType', filterLensType?.[0]?._id);
+                return;
+            }
+            handleChange('lensType', lensType?.[0]?._id);
         }
-
-
-        handleChange('lensType', lensType?.[0]?._id);
+        
 
 
     }, [])
@@ -94,6 +96,7 @@ const LensType = () => {
                     }
                         
                         }>
+                                {console.log(el._id,state?.lensType?.value)}
                             <input name="radio" id={el._id} type="radio" checked={el._id === state?.lensType?.value} />
                             <label htmlFor={el._id} className='flex gap-4 '>
                                 <div className='flex justify-center items-center shrink-0'>

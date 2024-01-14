@@ -17,14 +17,15 @@ const Form = () => {
   const [error, setError] = useState(false);
 
 
-  const nextStep = () => {
 
+  console.log(state)
+
+
+  const nextStep = () => {
     dispatch({
       key: "buttonClicked",
       payload: { newValue: "next" },
     });
-
-
 
     if (!state.radd.value && !state.ladd.value && state.step === 2) {
       handleChange("step", state.step + 2);
@@ -39,10 +40,32 @@ const Form = () => {
       return
     }
 
-
     handleChange("step", state.step + 1);
 
+  };
+  const prevStep = () => {
+    if (state.step <= 2){
+      return
+    }
+    dispatch({
+      key: "buttonClicked",
+      payload: { newValue: "prev" },
+    });
 
+    if (!state.radd.value && !state.ladd.value && state.step === 4) {
+      handleChange("step", state.step - 2);
+      return
+    }
+    if (state.lensType.value === '6585c5eed71dd57bf1c363af' && state.step === 6 && (state.radd.value || state.ladd.value)) {
+      handleChange("step", state.step - 2);
+      return
+    }
+    if (state.lensType.value !== '6585c5eed71dd57bf1c363af' && state.step === 6) {
+      handleChange("step", state.step - 2);
+      return
+    }
+
+    handleChange("step", state.step - 1);
 
   };
 
@@ -118,7 +141,17 @@ const Form = () => {
         <div className="flex flex-col   gap-10  w-[350px] sm:w-[490px]">
           <MultiStepForm />
           {state.step > 1 && (
-            <>
+            <div className="flex justify-between items-center">
+            <button
+                id="prev"
+                onClick={prevStep}
+                className={`font-medium bg-white border-[#080a36] border-[1px] text-[#080a36] text-lg select-none  py-3 px-5 rounded-lg cursor-pointer transition duration-100 hover:opacity-90  self-end w-[150px] active:scale-95 ${state.lang.value === "ar" ? "font-arabic" : "font-english"}  ${state.step > 2 ? " visible" : " invisible"} `}
+              >
+                {lang?.[state.lang.value]?.["Back"]}
+                
+              </button>
+
+
               {state.step === 6 ? (
                 <button
                   onClick={handleQuote}
@@ -130,12 +163,12 @@ const Form = () => {
                 <button
                   id="next"
                   onClick={nextStep}
-                    className={`font-medium bg-[#080a36] text-lg select-none text-white py-3 px-5 rounded-lg cursor-pointer transition duration-100 hover:opacity-90  self-end w-[150px] active:scale-95 ${state.lang.value === "ar" ? "font-arabic" : "font-english"}`}
+                    className={` place-items-end font-medium bg-[#080a36] text-lg select-none text-white py-3 px-5 rounded-lg cursor-pointer transition duration-100 hover:opacity-90  self-end w-[150px] active:scale-95 ${state.lang.value === "ar" ? "font-arabic" : "font-english"}`}
                 >
                   {lang?.[state.lang.value]?.["Next Step"]}
                 </button>
               )}
-            </>
+            </div>
           )}
         </div>
       )}

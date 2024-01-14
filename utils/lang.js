@@ -36,6 +36,7 @@ export const lang={
             Yes: "نعم"
         },
         "Next Step": "الخطوة التالية",
+        "Back":'خلف',
         "Get Quote": "احصل على السعر",
         congratulation:{
             text:'فيما يلي أفضل ثلاثة خيارات بالنسبة لك',
@@ -110,6 +111,7 @@ export const lang={
         Economy:"Economy"
       },
       "Next Step":"Next Step",
+      "Back":"Back",
       "Get Quote":"Get Quote",
 
   }
