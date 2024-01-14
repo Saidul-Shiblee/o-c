@@ -12,38 +12,39 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { useEffect, useState } from "react"
-// show = { showAddPackageModal } setShow = { setShowAddPackageModal } packages = { packages } setPackages = { setPackages } pack = { pack }
 
-export default function AddPackageModal({ show, setShow, packages, setPackages, pack }) {
-    const [packageName, setPackageName] = useState('')
+export default function AddLensModal({ show, setShow, setLenses, lens }) {
+    const [lensName, setLensName] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setPackageName(pack?.packageName || "")
-    }, [pack])
+        setLensName(lens?.lensName || "")
+    }, [lens])
 
-    const data = {packageName}
+    const data = { lensName }
 
 
 
     const resetForm = () => {
-        setPackageName("")
+        setLensName("")
        
     }
-    const createPackage = async () => {
+    const createLens = async () => {
         try {
             setLoading(true)
-            if (!pack) {
-          
-                const res = await fetch('/api/package', {
+            if (!lens) {
+                const res = await fetch('/api/lens', {
                     method: "POST",
                     body: JSON.stringify(data),
                     cache: 'no-store'
                 })
                 const result = await res.json()
-         
                 if (res.ok) {
-                    setPackages(pv => [...pv, result.data])
+                    setLenses(pv =>{ 
+                      
+                        return [...pv, result.data]
+                    
+                    })
                     resetForm()
                     setShow(false)
                     toast({
@@ -54,7 +55,6 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
                     })
 
                 }
-
                 if (!res.ok && (res.status === 400 || res.status === 409)) {
                     resetForm()
                     setShow(false)
@@ -81,7 +81,7 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
                 }
                 return
             }
-            const res = await fetch(`/api/package/?id=${pack?._id}`, {
+            const res = await fetch(`/api/lens/?id=${lens?._id}`, {
                 method: "PUT",
                 body: JSON.stringify(data),
                 cache: 'no-store'
@@ -89,7 +89,7 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
             const result = await res.json()
 
             if (res.ok) {
-                setPackages(pv => pv.map(el => {
+                setLenses(pv => pv.map(el => {
                     if (el._id === result.data._id) {
                         return result.data
                     }
@@ -105,6 +105,7 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
                 })
 
             }
+
             if (!res.ok && (res.status === 400 || res.status === 409)) {
                 resetForm()
                 setShow(false)
@@ -148,21 +149,21 @@ export default function AddPackageModal({ show, setShow, packages, setPackages, 
         <Dialog open={show} onOpenChange={setShow} >
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>{pack ? "Edit" : "Create"} Package</DialogTitle>
+                    <DialogTitle>{lens ? "Edit" : "Create"} Lens</DialogTitle>
 
 
                 </DialogHeader>
   
                     <div className='flex gap-4 justify-center items-center'>
-                        <Label>Package Name</Label><Input className="max-w-[200px]" type='text' value={packageName} onChange={(e) => setPackageName(e.target.value)} />
+                        <Label>Lens</Label><Input className="max-w-[200px]" type='text' value={lensName} onChange={(e) => setLensName(e.target.value)} />
                     </div>
 
                 <DialogFooter>
-                    <Button className="relative" onClick={createPackage} >
-                        {pack ? "Edit" : "Create"} Package
+                    <Button className="relative" onClick={createLens} >
+                        {lens ? "Edit" : "Create"} Lens
 
-                        {loading && <div class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
-                            <div class="border-t-transparent border-solid animate-spin  rounded-full border-white border-[3px] h-6 w-6"></div>
+                        {loading && <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+                            <div className="border-t-transparent border-solid animate-spin  rounded-full border-white border-[3px] h-6 w-6"></div>
                         </div>}
 
                     </Button>

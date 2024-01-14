@@ -19,6 +19,8 @@ module.exports = {
       fontFamily: {
         arabic: ['var(--arabic-font)'],
         english: ['var(--english-font)'],
+        style: ['var(--style)'],
+        brand: ['var(--brand)'],
       },
       colors: {
         border: "hsl(var(--border))",

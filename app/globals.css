@@ -386,3 +386,70 @@
       scrollbar-width: none;  /* Firefox */
 }
 }
+
+
+.line:after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 200px;
+    width: 100%;
+    top: -50%;
+    left: 0;
+    background: linear-gradient(180deg,hsla(0,0%,100%,0) 0,#fff 75%,#fff);
+    animation: run 5s 0s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(.4,.26,0,.97);
+
+}
+
+@keyframes run {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+
+.custom-shadow3{
+  filter: drop-shadow(0 0 6px #dbeafe);
+
+}
+.quote{
+  quotes: "“" "”"
+}
+.quote:before{
+    transition: .5s;
+    content: open-quote;
+    position: absolute;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    left: 0;
+    top: -25px;
+    left: -25px;
+    color: #fff;
+    background: linear-gradient(135deg,#e0f3f7,#60a5fa);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    z-index: 3;
+    text-align: center;
+   
+    font-size: 60px;
+}
+
+
+
+.quote-description:before {
+content: "";
+    position: absolute;
+    left: 35px;
+    bottom: -12px;
+    width: 25px;
+    height: 25px;
+    z-index: -1;
+    background: #fff;
+    transform: rotate(45deg);
+}

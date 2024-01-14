@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import Logo from '../../public/logo.png'
+import Logo from '../../../public/logo.png'
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
@@ -36,8 +36,9 @@ const [browser, setBrowser] = useState(false)
         email: email,
         password: password,
       });
+      console.log(res)
       if (!res.error) {
-        router.replace("/");
+        router.replace("/admin");
       } else {
         toast({
           title: "Error",
@@ -61,15 +62,15 @@ const [browser, setBrowser] = useState(false)
 
 
   if (browser && session) {
-    router.replace('/')
+    router.replace('/admin')
   }
 
 
     return (
-        <section class=" w-full h-screen flex justify-center items-center">
-          <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-[345px] md:w-[450px]">
-            <div class="w-full bg-gray-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-              <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <section className=" w-full h-screen flex justify-center items-center">
+          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-[345px] md:w-[450px]">
+            <div className="w-full bg-gray-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <div className='w-full flex justify-center items-center'>
                 <div className='w-12 h-12 relative overflow-hidden'>
                   <Image src={Logo} alt="logo" fill className='absolute rounded-full ' />
@@ -77,17 +78,17 @@ const [browser, setBrowser] = useState(false)
                 </div>
                 
                 
-                <h1 class=" text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+                <h1 className=" text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                   Sign in to your account
                 </h1>
                 <form
-                  class="space-y-4 md:space-y-6"
+                  className="space-y-4 md:space-y-6"
                   
                 >
                   <div>
                     <label
                       for="username"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Username
                     </label>
@@ -98,7 +99,7 @@ const [browser, setBrowser] = useState(false)
                   <div className='mb-4'>
                     <label
                       for="password"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Password
                     </label>
@@ -109,8 +110,8 @@ const [browser, setBrowser] = useState(false)
                 <Button className="relative w-full " onClick={handleSignin} >
                   Login
 
-                  {loading && <div class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
-                    <div class="border-t-transparent border-solid animate-spin  rounded-full border-white border-[3px] h-6 w-6"></div>
+                  {loading && <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+                    <div className="border-t-transparent border-solid animate-spin  rounded-full border-white border-[3px] h-6 w-6"></div>
                   </div>}
 
                 </Button>

@@ -1,429 +1,336 @@
+import Image from 'next/image'
+import React from 'react'
+import Hero from '../public/hero1.png'
+import Logo from '../public/logo_transparent_white.png'
+
+import BP from '../public/bp.png'
+import EQ from '../public/eq.png'
+import DR from '../public/dr.png'
+import OC from '../public/oc.png'
+import PRICE from '../public/price.svg'
+import LENS from '../public/lens.svg'
+import FRAMES from '../public/frames.svg'
+import LC from '../public/LC.svg'
+import ED from '../public/ed.png'
+import User1 from '../public/user1.png'
+import User2 from '../public/user2.png'
+import User3 from '../public/user3.png'
+import { MdPlace } from "react-icons/md";
+import { MdPhone } from "react-icons/md";
+import { MdEmail } from "react-icons/md";
+import { MdFacebook } from "react-icons/md";
+import { BsTwitterX } from "react-icons/bs";
 
 
-'use client'
+import { FaYoutube } from "react-icons/fa";
 
-import { useEffect, useState } from "react"
-import AddGroupModal from "./_component/Group/AddGroupModal"
-import { Button } from "@/components/ui/button"
-import GroupLoadingSkeleton from "./_component/Group/GroupLoadingSkeleton"
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import { TiEdit } from "react-icons/ti";
-import AddPackageModal from "./_component/package/AddPackageModal"
-import PackageLoadingSkeleton from "./_component/package/PackageLoadingSkeleton"
-import AddLensModal from "./_component/lens/AddLensModal"
-import AddPriceModal from "./_component/Price/AddPriceModal"
-import { useSession } from "next-auth/react"
-import {  useRouter } from "next/navigation"
-import Logo from '../public/logo.png'
-import Image from "next/image"
-import { signOut } from "next-auth/react"
-import processNumber from "@/utils/processNumber"
-import ChangePassword from "./_component/ChangePassword/ChangePassword"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { FaSquareThreads } from "react-icons/fa6";
+import { FaTiktok } from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
 
-import { FaBars } from "react-icons/fa6";
+import Navbar from './_components/Navbar'
+import { PiCheckFatDuotone } from "react-icons/pi";
+import Link from 'next/link'
 
 
-export default function Home() {
-
-  const [browser,setBrowser]=useState(false)
-
-  useEffect(()=>{
-    setBrowser(true)
-  },[])
-
-  const {data:session} = useSession()
-  const router=useRouter()
-
-
-  
-
-
-  const handleLogout=()=>{
-    signOut({ redirect: true,callbackUrl: 'http://localhost:3000/login' })
-
-   
-  }
-  const [groups, setGroups] = useState([])
-  const [packages, setPackages] = useState([])
-  const [lenses, setLenses] = useState([])
-  const [prices, setPrices] = useState([])
-  const [showAddGroupModal, setShowAddGroupModal] = useState(false)
-  const [showAddPackageModal, setShowAddPackageModal] = useState(false)
-  const [showAddLensModal, setShowAddLensModal] = useState(false)
-  const [showAddPriceModal, setShowAddPriceModal] = useState(false)
-  const [l1, setl1] = useState(false)
-  const [l2, setl2] = useState(false)
-  const [l3, setl3] = useState(false)
-  const [l4, setl4] = useState(false)
-  const [group, setGroup] = useState(null)
-  const [pack, setPack] = useState(null)
-  const [lens, setLens] = useState(null)
-  const [price, setPrice] = useState(null)
-
-  
-
-  useEffect(()=>{
-    if (!showAddGroupModal){
-      setGroup(null)
-    }
-    if (!showAddPackageModal){
-      setPack(null)
-    }
-    if (!showAddLensModal){
-      setLens(null)
-    }
-    if (!showAddPriceModal){
-      setPrice(null)
-    }
-  }, [showAddGroupModal, showAddPackageModal, showAddLensModal, showAddPriceModal])
-  
-
-
-
-
-
-  useEffect(() => {
-    const getGroups = async () => {
-      setl1(true)
-      const res = await fetch('/api/group')
-      const data = await res.json()
-      if (res.ok) {
-        setGroups(data?.data)
-        setl1(false)
-      }
-    }
-
-    getGroups()
-  }, [])
-  useEffect(() => {
-    const getPackages = async () => {
-      setl1(true)
-      const res = await fetch('/api/package')
-      const data = await res.json()
-      if (res.ok) {
-        setPackages(data?.data)
-        setl2(false)
-      }
-    }
-
-    getPackages()
-  }, [])
-  useEffect(() => {
-    const getLenses = async () => {
-      setl3(true)
-      const res = await fetch('/api/lens')
-      const data = await res.json()
-      if (res.ok) {
-        setLenses(data?.data)
-        setl3(false)
-      }
-    }
-
-    getLenses()
-  }, [])
-
-
-  useEffect(() => {
-    const getPrices = async () => {
-      setl4(true)
-      const res = await fetch('/api/price')
-      const data = await res.json()
-      if (res.ok) {
-        setPrices(data?.data)
-        setl4(false)
-      }
-    }
-    getPrices()
-  }, [])
-
-
-  const handleDelete=async(id,endpoint)=>{
-    try {
-      const res = await fetch(`/api/${endpoint}/?id=${id}`, {
-        method: "DELETE",
-        cache: 'no-store'
-      })
-      const result = await res.json()
-      if (res.ok) {
-        if (endpoint ='group')
-        setGroups(pv => pv.filter(el=>el._id!==id))
-        if (endpoint ='package')
-        setPackages(pv => pv.filter(el=>el._id!==id))
-        if (endpoint ='lens')
-        setLenses(pv => pv.filter(el=>el._id!==id))
-        if (endpoint ='price')
-        setPrices(pv => pv.filter(el=>el._id!==id))
-      }
-
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-
-  if (browser && !session){
-    router.replace('/login')
-  }
- 
-
+export default function LP() {
   return (
-
-
-    <div className="flex w-full flex-col lg:flex-row">
-      <div className=" bg-black w-[20%] hidden lg:flex  py-20 flex-col text-white fixed h-screen">
-
-        <div className="flex flex-col justify-center items-center space-x-2">
-          <div className='w-12 h-12 relative overflow-hidden'>
-            <Image src={Logo} alt="logo" fill className='absolute rounded-full ' />
+    <div className='w-full '>
+      <Navbar/>
+      <section as='hero' id='home' className='flex flex-col lg:flex-row justify-center lg:justify-between items-end w-full h-screen overflow-hidden gap-10'>
+        <div className='w-full lg:w-1/2 place-self-center flex justify-center flex-col items-center h-[calc(100vh_-_/2)]  lg:h-full gap-4 lg:order-1 order-2'>
+          <div className=' flex flex-col gap-4'>
+            <p className='  text-blue-950 text-4xl lg:text-7xl font-semibold text-center'>Keep your eyes </p>
+            <p className='  text-blue-400   text-4xl lg:text-6xl  font-style italic text-center'>Healthy </p>
+            <p className='  text-blue-950  text-2xl lg:text-3xl font-brand text-center relative'> <span className=' inline-block absolute lg:mt-1'>with</span>
+             <span className='  text-blue-950  text-4xl lg:text-6xl font-semibold uppercase font-brand inline-block ml-16 lg:ml-20 '>Optical Care</span></p>
           </div>
-          <p> Hello! Admin</p>
-          <p className="text-sm">{session?.user?.email}</p>  
          
+
         </div>
-        <div className="py-10 ">
-          <p className="w-full py-2 text-black text-center bg-white font-semibold cursor-pointer">Dashboard</p>
+        <div className='lg:order-2 order-1 w-full lg:w-1/2 h-[calc(100vh_-_/2)]  lg:h-full relative '>
+          <Image height={600} src={Hero} alt='hero_image' className=' object-cover lg:absolute bottom-0 right-0' />
         </div>
-        <div className="mt-auto flex justify-center gap-4">
-          <p onClick={() => handleLogout()} className=" cursor-pointer">Logout</p>  
-          <ChangePassword cls='bg-black border-none  hover:bg-black hover:text-white px-0 py-0 -mt-2'/>
+      </section>
+      <section as='our advantages' className='flex flex-col px-6 md:px-20 py-20'>
+        <div className='w-full'>
+          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Advantanges</h2>
+          <h3 className='text-5xl font-semibold text-center text-blue-950 py-10'>Good vision for many years</h3>
+
+        </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 py-6 gap-y-20 '>
+
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={PRICE} height={60} width={60} alt='Favaourable Price' />
+            <p className='text-xl'>Favaourable Price</p>
+
+          </div>
+
+          
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={EQ} height={60} width={60} alt='>Newest equipment'/>
+            <p className='text-xl'>Newest equipment</p>
+
+          </div>
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={DR} height={60} width={60} alt='Doctors experience'/>
+            <p className='text-xl'>Doctors experience</p>
+
+          </div>
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={ED} height={60} width={60} alt='Thorough diagnosis'/>
+            <p className='text-xl'>Thorough diagnosis</p>
+
+          </div>
+
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={BP} height={60} width={60} alt='Best practices' />
+            <p className='text-xl'>Best practices</p>
+
+          </div>
+          
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={FRAMES} height={60} width={60} alt='>Wide Varity of Frames' />
+            <p className='text-xl'>Wide Varity of Frames</p>
+
+          </div>
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={LENS} height={60} width={60} alt='Wide Varity of Lens' />
+            <p className='text-xl'>Wide Varity of Lens</p>
+
+          </div>
+          <div className='flex gap-2 justify-start md:justify-center items-center'>
+            <Image src={OC} height={60} width={60} alt='Thorough diagnosis' />
+            <p className='text-xl'>Best Services</p>
+
+          </div>
+
+
         </div>
         
+      </section>
+      <section as='about us' id='about-us' className='flex flex-col lg:flex-row  px-6 md:px-20 py-20 bg-[#F6F7F9] gap-8 lg:gap-0'>
+        <div className='w-full flex flex-col items-start lg:pr-28 gap-6'>
+          <h2 className='uppercase font-brand text-blue-400   text-2xl'>About Us</h2>
+          <h3 className='text-4xl font-semibold  text-blue-950  '>A center specialized in examining and correcting eyesight, and providing the latest glasses and lenses.</h3>
+
+        </div>
+        <div className=' flex flex-col gap-4'>
+          <div className='flex gap-4'>
+            <div className='w-10 h-10 bg-white rounded-full shrink-0 flex justify-center items-center drop-shadow-lg'>
+              <PiCheckFatDuotone  className='w-6 h-6 fill-blue-400 text-blue-950' />
+            </div>
+            <p>Performing all procedures at the highest professional level using the most modern methods.</p>
+
+          </div>
+          <div className='flex gap-4'>
+            <div className='w-10 h-10 bg-white rounded-full shrink-0 flex justify-center items-center drop-shadow-lg'>
+              <PiCheckFatDuotone className='w-6 h-6 fill-blue-400 text-blue-950' />
+            </div>
+            <p>Drawing up an individual treatment program for each patient.</p>
+
+          </div>
+          <div className='flex gap-4'>
+            <div className='w-10 h-10 bg-white rounded-full shrink-0 flex justify-center items-center drop-shadow-lg'>
+              <PiCheckFatDuotone className='w-6 h-6 fill-blue-400 text-blue-950' />
+            </div>
+            <p>Compliance of materials and equipment with international standards, the availability of all necessary certificates and permits.</p>
+
+          </div>
+          
+
+          
+          
+          
+          
 
 
-      </div>
-    
-        <Sheet >
-          <SheetTrigger asChild>
-            <Button className="block lg:hidden p-4" variant="hamBurgerButton" size={'hamBurgerButton'}>
-              <FaBars className="block h-6 w-6 " />
-            </Button>
-          </SheetTrigger>
-          <SheetContent className='overflow-y-auto'>
-            <SheetHeader>
+        </div>
+        
+      </section>
 
-              <div className="flex flex-col space-y-1 mt-4 mb-2 justify-center items-center">
-                <div className='w-12 h-12 relative overflow-hidden'>
-                  <Image src={Logo} alt="logo" fill className='absolute rounded-full ' />
-                </div>
-                <p> Hello! Admin</p>
-                <p className="text-sm">{session?.user?.email}</p>
+      <section as='our services' id='services' className='flex flex-col px-6 md:px-20 py-20 '>
+        <div className='w-full'>
+          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Services</h2>
+          <h3 className='text-4xl font-semibold text-center text-blue-950 py-10 hidden lg:block'>We offer a whole range of services<br /> for you, your family and friends</h3>
+          <h3 className='text-4xl font-semibold  text-blue-950 py-10 lg:hidden block'>We offer a whole range of services for you,your family and friends</h3>
+
+        </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 py-6 gap-y-20 w-full'>
+
+          <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
+            <Image src={DR} height={60} width={60} alt='Favaourable Price' />
+            <p className='text-xl'>Comprehensive diagnosis of vision</p>
+
+          </div>
+
+
+          <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
+            <Image src={LC} height={60} width={60} alt='>Newest equipment' />
+            <p className='text-xl'>Laser Vision Correction</p>
+
+          </div>
+          <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
+            <Image src={LENS} height={60} width={60} alt='Doctors experience' />
+            <p className='text-xl'>Lenses</p>
+
+          </div>
+          <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
+            <Image src={FRAMES} height={60} width={60} alt='Thorough diagnosis' />
+            <p className='text-xl'>Frames</p>
+
+          </div>
+
+          
+
+
+        </div>
+
+      </section>
+      <section as='customer review' id='testimonials' className='flex flex-col px-6 md:px-20 py-20 '>
+        <div className='w-full'>
+          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>TESTIMONIALS</h2>
+          <h3 className='text-4xl font-semibold text-center text-blue-950 py-10'>Don&apos;t take our word for it —<br/>
+            hear what our customers are saying</h3>
+
+        </div>
+     
+
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 py-6 gap-y-20 w-full'>
+        
+          <div className='flex flex-col items-start  quote   relative gap-[20px] '>
+            <div className='p-8 custom-shadow3  quote-description relative z-[1] bg-white h-min'>
+              It is one of the best eyeglasses stores in terms of eye examination. It has distinguished eye specialists and their treatment is excellent in terms of explaining the types of lenses and the difference between them. It is better than Moroccan in this regard.
+              The assortment of glasses is diverse
+            </div>
+            <div className='ml-[20px] flex justify-start items-center gap-3'>
+              <div className='w-14 h-14  rounded-full relative overflow-hidden  '>
+                <Image src={User2} alt='user' fill className="absolute object-cover " />
               </div>
-            </SheetHeader>
+              <div>
+                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>Adeeb Saleh</h4>
+                
+              </div>
+            </div>
+          </div>
 
-            <div className="py-10 ">
-              <p className="w-full py-2 text-black text-center bg-white font-semibold cursor-pointer">Dashboard</p>
+          <div className='flex flex-col items-start  quote   relative gap-[20px] '>
+            <div className='p-8 custom-shadow3  quote-description relative z-[1] bg-white h-min'>
+              To be honest, I have been getting my lenses and glasses from them regularly for two years, their treatment is nice, the examination by the doctor is distinguished, his examination is accurate and nice, as many examinations as I have tried, they are the best people I have tried (the first time I bought glasses from them, I was shocked that I was supposed to be able to read the signs on the street).
+              Their lenses are very good and fast, they take out a lot in a day or two, their support is nice and they are very cooperative.
+            </div>
+            <div className='ml-[20px] flex justify-start items-center gap-3'>
+              <div className='w-14 h-14  rounded-full relative overflow-hidden  '>
+                <Image src={User1} alt='user' fill className="absolute object-cover " />
+              </div>
+              <div>
+                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>Raghadm</h4>
+
+              </div>
+            </div>
+          </div>
+
+          <div className='flex flex-col items-start  quote   relative gap-[20px] '>
+            <div className='p-8 custom-shadow3  quote-description relative z-[1] bg-white h-min'>
+              Very excellent, I had glasses removed from them and were comfortable with them, unlike the ones I had had before from other stores that cracked in the head.
+            </div>
+            <div className='ml-[20px] flex justify-start items-center gap-3'>
+              <div className='w-14 h-14  rounded-full relative overflow-hidden  '>
+                <Image src={User3} alt='user' fill className="absolute object-cover " />
+              </div>
+              <div>
+                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>SALEH ALMUTAIRI</h4>
+                
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+      
+
+      <section id="footer" className="w-full  md:h-[300px] overflow-hidden">
+
+        <div className="w-full h-full flex justify-around items-center   bg-[#0e1633] md:overflow-hidden container-padding px-6 md:px-20 py-20">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between  gap-8 md:gap-10   text-white">
+            <div className="flex flex-row lg:flex-col w-[215px] gap-2">
+              <div className="flex lg:place-items-center relative h-16  w-16">
+                <Image alt="logo" fill src={Logo} className="absolute object-contain" />
+
+              </div>
+              <p className="font-brand uppercase lg:text-2xl text-white self-center">Optical Care</p>
+            </div>
+
+            <div className=" w-[1px] h-full bg-[#ffffff1a] relative hidden md:block md:h-[300px]">
+              <div className="line w-full h-full hidden md:block">
+              </div>
+            </div>
+            <div>
+              <h5 className="text-lg font-bold mb-4">Social</h5>
+              <div className="flex justify-start items-start gap-6 ">
+                <Link href="/" >
+                  <MdFacebook className="w-8 h-8 hover:drop-shadow-lg hover:scale-105 cursor-pointer hover:-translate-y-1 transition-all duration-200" />
+                </Link>
+                <Link href="https://twitter.com/OpticareSA" >
+                  <BsTwitterX className="w-7 h-8 hover:drop-shadow-lg hover:scale-105 cursor-pointer hover:-translate-y-1 transition-all duration-200" />
+                </Link>
+                <Link href="/" ><FaYoutube className="w-7 h-7 hover:drop-shadow-lg hover:scale-105 cursor-pointer hover:-translate-y-1 transition-all duration-200" /></Link>
+                <Link href="/" ><AiFillInstagram className="w-7 h-7 hover:drop-shadow-lg hover:scale-105 cursor-pointer hover:-translate-y-1 transition-all duration-200" /></Link>
+              </div>
+            </div>
+
+            <div className=" w-[1px] h-full bg-[#ffffff1a] relative hidden md:block md:h-[300px]">
+              <div className="line w-full h-full hidden md:block">
+              </div>
+            </div>
+            <div className='flex flex-col '>
+              <p className='text-lg font-bold mb-4'>Open Hours </p>
+              <div className='text-white text-sm flex flex-col gap-2'>
+                <p>Saturday - Friday
+                </p>
+                <p>9:00AM - 05:00PM</p>
+              </div>
+
+
+            </div>
+            <div className=" w-[1px] h-full bg-[#ffffff1a] relative hidden md:block md:h-[300px]">
+              <div className="line w-full h-full hidden md:block">
+              </div>
             </div>
 
 
-
-
-
-
-            <SheetFooter>
-              <div className="mt-auto flex justify-center gap-2">
-                <p onClick={() => handleLogout()} className=" cursor-pointer text-black text-xs ">Logout</p>
-              <ChangePassword cls='bg-white border-none  hover:bg-white hover:text-black px-0 py-0 -mt-3 text-xs font-normal' />
-              </div>
-
-
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-
-   
-     
-      
-
-      <div className="flex min-h-screen flex-col gap-4 p-6 lg:p-24 items-start w-[100%] lg:w-[80%] lg:ml-[20%]">
-        <div
-          className="w-full p-3 lg:p-8  flex flex-col border border-1 rounded-md gap-4 shadow"
-        >
-          <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">Mange Groups</h3>
-            <Button onClick={() => {
-              setGroup(null)
-              setShowAddGroupModal(true)
-
-            }} >Add Group</Button>
-          </div>
-          {l1 ? <div className="flex flex-col gap-4">
-            <GroupLoadingSkeleton />
-            <GroupLoadingSkeleton />
-          </div> : <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            {groups.length === 0 && <div> No group added yet</div>}
-            {groups.map(el => <div className="flex flex-col border p-2 rounded-md" key={el._id}>
-              <div className="flex justify-between items-center"> <h6 className="text-xl font-semibold">Group-{el.groupName}</h6>
-                <div className="flex justify-center items-center gap-2">
-                  <RiDeleteBin5Fill
-                    onClick={() => handleDelete(el._id, 'group')}
-
-                    className="w-6 h-6 text-gray-600 hover:text-black active:scale-95" />
-                  <TiEdit onClick={() => {
-                    setGroup(el)
-                    setShowAddGroupModal(true)
-
-
-                  }}
-                    className="w-7 h-7 text-gray-600 hover:text-black active:scale-95" />
-                </div>
-              </div>
+            <div className="footer-contant">
+              <h5 className="text-lg font-bold mb-4">Contact Info</h5>
               <div>
-                <p> Spherical:{" " +processNumber(el.sphericalLowerLimit)[0] + " " + processNumber(el.sphericalLowerLimit)[1] + " "}to{" " + processNumber(el.sphericalUpperLimit)[0] + " " + processNumber(el.sphericalUpperLimit)[1]}</p>
-                <p> Cylindrical: {" " + processNumber(el.cylindricalLowerLimit)[0] + " " + processNumber(el.cylindricalLowerLimit)[1] + " "}to{" " + processNumber(el.cylindricalUpperLimit)[0] + " " + processNumber(el.cylindricalUpperLimit)[1] + " "} </p>
-                <p> Axis:Any</p>
-                <p> Add:{el.additionalPowerLowerLimit ? " " + processNumber(el.additionalPowerLowerLimit)[0] + " " + processNumber(el.additionalPowerLowerLimit)[1] + " " + "to" + " " +  processNumber(el.additionalPowerUpperLimit)[0] + " " + processNumber(el.additionalPowerUpperLimit)[1] : 0}</p>
-                {el.type && <p> Type:{el.type}</p>}
+                <ul className=" flex flex-col gap-4">
+                  <li className="flex justify-start items-start  gap-3">
+                    <MdPlace className="w-6 h-6 shrink-0" />
+                    <p className="leading-tight capitalize">
+                      {" "}
+                      4588, Al Wusta District, Unayzah 56466, Saudi Arabia
+
+                    </p>
+                  </li>
+                  <li className="flex justify-start items-center  gap-3">
+                    <MdPhone className="w-5 h-5 shrink-0" />
+                    +966566696151
+                  </li>
+                  <li className="flex justify-start items-center  gap-3">
+                    <MdEmail className="w-5 h-5 shrink-0" />
+                    admin@opticalcare.net
+                  </li>
+                </ul>
               </div>
-            </div>)}
-          </div>}
-          <AddGroupModal show={showAddGroupModal} setShow={setShowAddGroupModal} groups={groups} setGroups={setGroups} group={group} />
-
-        </div>
-
-
-        <div
-          className="w-full p-3 lg:p-8  flex flex-col border border-1 rounded-md gap-4 shadow"
-        >
-          <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">Manage Package</h3>
-            <Button onClick={() => {
-              setPack(null)
-              setShowAddPackageModal(true)
-
-            }} >Add Package</Button>
+            </div>
           </div>
-          {l2 ? <div className="flex flex-col gap-4">
-            <PackageLoadingSkeleton />
-
-          </div> : <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            {packages.length === 0 && <div> No group added yet</div>}
-            {packages.map(el => <div className="flex flex-col border p-2 rounded-md" key={el._id}>
-              <div className="flex justify-between items-center"> <h6 className="text-xl font-semibold">{el?.packageName}</h6>
-                <div className="flex justify-center items-center gap-2">
-                  <RiDeleteBin5Fill
-                    onClick={() => handleDelete(el._id, "package")}
-
-                    className="w-6 h-6 text-gray-600 hover:text-black active:scale-95" />
-                  <TiEdit onClick={() => {
-                    setPack(el)
-                    setShowAddPackageModal(true)
-
-
-                  }}
-                    className="w-7 h-7 text-gray-600 hover:text-black active:scale-95" />
-                </div>
-              </div>
-
-            </div>)}
-          </div>}
-          <AddPackageModal show={showAddPackageModal} setShow={setShowAddPackageModal} packages={packages} setPackages={setPackages} pack={pack} />
-
         </div>
-
-
-        <div
-          className="w-full p-3 lg:p-8  flex flex-col border border-1 rounded-md gap-4 shadow"
-        >
-          <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">Manage Lens</h3>
-            <Button onClick={() => {
-              setLens(null)
-              setShowAddLensModal(true)
-
-            }} >Add Lens</Button>
-          </div>
-          {l3 ? <div className="flex flex-col gap-4">
-            <PackageLoadingSkeleton />
-
-          </div> : <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            {lenses?.length === 0 && <div> No lens added yet</div>}
-            {lenses?.map(el => <div className="flex flex-col border p-2 rounded-md" key={el._id}>
-              <div className="flex justify-between items-center"> <h6 className="text-xl font-semibold">{el?.lensName}</h6>
-                <div className="flex justify-center items-center gap-2">
-                  <RiDeleteBin5Fill
-                    onClick={() => handleDelete(el._id, "lens")}
-
-                    className="w-6 h-6 text-gray-600 hover:text-black active:scale-95" />
-                  <TiEdit onClick={() => {
-                    setLens(el)
-                    setShowAddLensModal(true)
-
-
-                  }}
-                    className="w-7 h-7 text-gray-600 hover:text-black active:scale-95" />
-                </div>
-              </div>
-
-            </div>)}
-          </div>}
-          <AddLensModal show={showAddLensModal} setShow={setShowAddLensModal} lenses={lenses} setLenses={setLenses} lens={lens} />
-
-        </div>
-        <div
-          className="w-full p-3 lg:p-8  flex flex-col border border-1 rounded-md gap-4 shadow"
-        >
-          <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">Manage Price</h3>
-            <Button onClick={() => {
-              setGroup(null)
-              setShowAddPriceModal(true)
-
-            }} >Add Price</Button>
-          </div>
-          {l4 ? <div className="flex flex-col gap-4">
-            <GroupLoadingSkeleton />
-            <GroupLoadingSkeleton />
-          </div> : <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            {prices.length === 0 && <div> No price added yet</div>}
-            {prices.map(el => <div className="flex flex-col border p-2 rounded-md" key={el._id}>
-              <div className="flex justify-between items-center"> <h6 className="text-xl font-semibold">{el?.groupIdentifier}</h6>
-                <div className="flex justify-center items-center gap-2">
-                  <RiDeleteBin5Fill
-                    onClick={() => handleDelete(el._id, 'price')}
-
-                    className="w-6 h-6 text-gray-600 hover:text-black active:scale-95" />
-                  <TiEdit onClick={() => {
-                    setPrice(el)
-                    setShowAddPriceModal(true)
-
-
-                  }}
-                    className="w-7 h-7 text-gray-600 hover:text-black active:scale-95" />
-                </div>
-              </div>
-              <div>
-                <p> Group Name:{el?.group?.groupName}</p>
-                <p> Lense Type: {el?.lenseType?.lensName} </p>
-                <p> Package:{el?.package?.packageName}</p>
-                <p> Lense Price:SAR-{el?.lensePrice}</p>
-                {el?.rimlessAvailable && <p> Rimless Available:Yes</p>}
-                {el?.rimlessAvailable && <p> Rimless Price:SAR-{el?.rimlessPrice}</p>}
-                {el?.attributes && <p> Attributes:{el?.attributes}</p>}
-                {el?.rimlessAttributes && <p>Rimless Attributes:{el?.rimlessAttributes}</p>}
-                {el?.remarks && <p> Remarks:{el?.remarks}</p>}
-              </div>
-            </div>)}
-          </div>}
-          <AddPriceModal show={showAddPriceModal} setShow={setShowAddPriceModal} prices={prices} setPrices={setPrices} price={price} groups={groups} lenses={lenses} packages={packages} />
-
-        </div>
-
-
-
+        
+      </section>
+      <div className="w-full h-12 bg-[#0a1026] flex justify-center items-center">
+        <h6 className=" text-white">Copyright © 2023, All rights reserved.</h6>
       </div>
-
+     
     </div>
-
   )
 }
-
-
