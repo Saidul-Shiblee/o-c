@@ -15,6 +15,9 @@ import ED from '../public/ed.png'
 import User1 from '../public/user1.png'
 import User2 from '../public/user2.png'
 import User3 from '../public/user3.png'
+import Shop from '../public/shop.jpeg'
+import Map from '../public/map.png'
+
 import { MdPlace } from "react-icons/md";
 import { MdPhone } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
@@ -54,7 +57,7 @@ export default function LP() {
       </section>
       <section as='our advantages' className='flex flex-col px-6 md:px-20 py-20'>
         <div className='w-full'>
-          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Advantanges</h2>
+          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Advantages</h2>
           <h3 className='text-5xl font-semibold text-center text-blue-950 py-10'>Good vision for many years</h3>
 
         </div>
@@ -149,14 +152,38 @@ export default function LP() {
         
       </section>
 
-      <section as='our services' id='services' className='flex flex-col px-6 md:px-20 py-20 '>
+      <section as='our location' className='flex flex-col px-6 md:px-20 py-20'>
+        <div className='w-full'>
+          <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Location</h2>
+          <h3 className='text-5xl font-semibold text-center text-blue-950 py-10'>Easy way to find us</h3>
+
+        </div>
+        <div className='grid grid-cols-1 lg:grid-cols-2  gap-10 py-6  w-full'>
+
+          <div className=' md:w-[calc((100vw_-_200px)_/_2)] h-[300px] md:h-[400px] relative'>
+
+            <Image fill src={Shop} alt='shop image' className='absolute object-cover rounded-lg shadow-lg'/>
+
+          </div>
+          <div className=' md:w-[calc((100vw_-_200px)_/_2)] h-[300px] md:h-[400px] relative'>
+            <Image fill src={Map} alt='map image' className='absolute object-cover rounded-lg shadow-lg' />
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <section as='our services' id='services' className='flex flex-col px-6 md:px-20 py-20 bg-[#F6F7F9]'>
         <div className='w-full'>
           <h2 className='uppercase font-brand text-blue-400  text-center text-2xl'>Our Services</h2>
           <h3 className='text-4xl font-semibold text-center text-blue-950 py-10 hidden lg:block'>We offer a whole range of services<br /> for you, your family and friends</h3>
           <h3 className='text-4xl font-semibold  text-blue-950 py-10 lg:hidden block'>We offer a whole range of services for you,your family and friends</h3>
 
         </div>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 py-6 gap-y-20 w-full'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 py-6 gap-y-20 w-full'>
 
           <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
             <Image src={DR} height={60} width={60} alt='Favaourable Price' />
@@ -165,11 +192,11 @@ export default function LP() {
           </div>
 
 
-          <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
+          {/* <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
             <Image src={LC} height={60} width={60} alt='>Newest equipment' />
             <p className='text-xl'>Laser Vision Correction</p>
 
-          </div>
+          </div> */}
           <div className='flex flex-col items-start  gap-2 justify-between p-10 h-[200px] border-[1px] border-blue-950/30 shadow-lg hover:-translate-y-[20px] transition-all duration-150 ease-in-out cursor-pointer'>
             <Image src={LENS} height={60} width={60} alt='Doctors experience' />
             <p className='text-xl'>Lenses</p>
@@ -208,7 +235,7 @@ export default function LP() {
                 <Image src={User2} alt='user' fill className="absolute object-cover " />
               </div>
               <div>
-                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>Adeeb Saleh</h4>
+                <h4 className='font-bold text-lg text-blue-950 font-hero'>Adeeb Saleh</h4>
                 
               </div>
             </div>
@@ -224,7 +251,7 @@ export default function LP() {
                 <Image src={User1} alt='user' fill className="absolute object-cover " />
               </div>
               <div>
-                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>Raghadm</h4>
+                <h4 className='font-bold text-lg text-blue-950 font-hero'>Raghadm</h4>
 
               </div>
             </div>
@@ -239,7 +266,7 @@ export default function LP() {
                 <Image src={User3} alt='user' fill className="absolute object-cover " />
               </div>
               <div>
-                <h4 className='font-bold text-lg text-[#0a222f] font-hero'>SALEH ALMUTAIRI</h4>
+                <h4 className='font-bold text-lg text-blue-950 font-hero'>SALEH ALMUTAIRI</h4>
                 
               </div>
             </div>
@@ -289,7 +316,7 @@ export default function LP() {
               <div className='text-white text-sm flex flex-col gap-2'>
                 <p>Saturday - Friday
                 </p>
-                <p>9:00AM - 05:00PM</p>
+                <p>4:00PM - 12:00AM</p>
               </div>
 
 
